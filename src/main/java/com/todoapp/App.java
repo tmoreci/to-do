@@ -6,7 +6,10 @@ public class App {
     public static void main(String[] args) {
         // Scanner reads input from the keyboard (System.in)
         Scanner scanner = new Scanner(System.in);
-        TodoManager manager = new TodoManager();
+
+        // FileStorage tells the app WHERE to save — TodoManager uses it
+        FileStorage storage = new FileStorage("todos.csv");
+        TodoManager manager = new TodoManager(storage);
 
         System.out.println("Welcome to the Todo App!");
         System.out.println("========================");
@@ -63,6 +66,7 @@ public class App {
         }
 
         Todo todo = manager.addTodo(title);
+        manager.save(); // auto-save after adding
         System.out.println("Added: " + todo);
     }
 
@@ -84,6 +88,7 @@ public class App {
         if (id == -1) return;
 
         if (manager.completeTodo(id)) {
+            manager.save(); // auto-save after completing
             System.out.println("Todo #" + id + " marked as complete!");
         } else {
             System.out.println("No todo found with ID " + id + ".");
@@ -103,6 +108,7 @@ public class App {
         if (id == -1) return;
 
         if (manager.deleteTodo(id)) {
+            manager.save(); // auto-save after deleting
             System.out.println("Todo #" + id + " deleted.");
         } else {
             System.out.println("No todo found with ID " + id + ".");

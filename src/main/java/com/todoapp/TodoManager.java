@@ -7,10 +7,28 @@ public class TodoManager {
     // An ArrayList that holds all our Todo objects
     private List<Todo> todos;
     private int nextId;
+    private FileStorage storage;
 
-    public TodoManager() {
-        this.todos = new ArrayList<>();
-        this.nextId = 1;   // auto-increment IDs starting at 1
+    public TodoManager(FileStorage storage) {
+        this.storage = storage;
+        this.todos = storage.load(); // load saved todos from file
+
+        // Set nextId to one past the highest existing ID
+        this.nextId = 1;
+        for (Todo todo : todos) {
+            if (todo.getId() >= nextId) {
+                nextId = todo.getId() + 1;
+            }
+        }
+
+        if (!todos.isEmpty()) {
+            System.out.println("Loaded " + todos.size() + " todo(s) from disk.");
+        }
+    }
+
+    // Save current todos to file
+    public void save() {
+        storage.save(todos);
     }
 
     // Add a new todo and return it

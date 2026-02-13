@@ -17,6 +17,14 @@ public class Todo {
         this.createdAt = LocalDateTime.now();     // timestamp when created
     }
 
+    // Constructor for restoring a todo from a saved file
+    public Todo(int id, String title, boolean completed, LocalDateTime createdAt) {
+        this.id = id;
+        this.title = title;
+        this.completed = completed;
+        this.createdAt = createdAt;
+    }
+
     // Getters — let other code READ our fields
     public int getId() {
         return id;
