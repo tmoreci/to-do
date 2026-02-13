@@ -5,23 +5,28 @@ public class App {
         System.out.println("Welcome to the Todo App!");
         System.out.println("========================\n");
 
-        // Create some todos
-        Todo todo1 = new Todo(1, "Learn Java basics");
-        Todo todo2 = new Todo(2, "Build a Todo app");
-        Todo todo3 = new Todo(3, "Show it to friends");
+        // Create a manager — it handles all the todos for us
+        TodoManager manager = new TodoManager();
 
-        // Mark the first one as done
-        todo1.setCompleted(true);
+        // Add some todos (no more manual IDs — the manager handles that!)
+        manager.addTodo("Learn Java basics");
+        manager.addTodo("Build a Todo app");
+        manager.addTodo("Show it to friends");
 
-        // Print them out — this calls each Todo's toString() method
-        System.out.println(todo1);
-        System.out.println(todo2);
-        System.out.println(todo3);
+        // Print the list
+        System.out.println("--- My Todos ---");
+        manager.printAll();
 
-        // Show that we can read individual fields with getters
-        System.out.println("\nDetails for todo #2:");
-        System.out.println("  Title:     " + todo2.getTitle());
-        System.out.println("  Completed: " + todo2.isCompleted());
-        System.out.println("  Created:   " + todo2.getCreatedAt());
+        // Complete a todo by ID
+        System.out.println("\n* Completing 'Learn Java basics'...\n");
+        manager.completeTodo(1);
+
+        // Delete a todo by ID
+        System.out.println("* Deleting 'Show it to friends'...\n");
+        manager.deleteTodo(3);
+
+        // Print the updated list
+        System.out.println("--- Updated Todos ---");
+        manager.printAll();
     }
 }
